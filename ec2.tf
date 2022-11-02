@@ -12,7 +12,20 @@ resource "aws_instance" "bastion-tf" {
 }
 
 
-resource "aws_instance" "apache-tf" {
+resource "aws_instance" "test-tf" {
+  ami           = "ami-0f62d9254ca98e1aa"
+  instance_type = "t3.micro"
+  #vpc_id        =aws_vpc.vpc.id
+  subnet_id     =aws_subnet.private[0].id
+  vpc_security_group_ids = [aws_security_group.apache.id]
+
+  tags = {
+    Name = "test-tf"
+    terraform=true
+  }
+}
+
+resource "aws_instance" "test-tf" {
   ami           = "ami-0f62d9254ca98e1aa"
   instance_type = "t3.micro"
   #vpc_id        =aws_vpc.vpc.id
